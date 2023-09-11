@@ -1,0 +1,4 @@
+test_login_user:
+#  username:用户名, password：密码, except_result：期望结果, except_code：期望响应码， except_msg：期望信息
+  - ["17647352440", "123456", True, 200, "SUCCESS"]
+  - ["17647352440", "yy123456", False, 200002, "用户名或密码错误"]

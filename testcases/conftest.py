@@ -19,10 +19,10 @@ def get_data(yaml_file_name):
         return yaml_data
 
 
-base_data = get_data("base_data.yml")
-api_data = get_data("api_test_data.yml")
-scenario_data = get_data("scenario_test_data.yml")
-
+# base_data = get_data("base_data.yml")
+# api_data = get_data("api_test_data.yml")
+# scenario_data = get_data("scenario_test_data.yml")
+login_data = get_data("login_test_data.yml")
 
 @allure.step("前置步骤 ==>> 清理数据")
 def step_first():
@@ -40,7 +40,7 @@ def step_login(username, password):
     logger.info("前置步骤 ==>> 管理员 {} 登录，返回信息 为：{}".format(username, password))
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=False)
 def login_fixture():
     username = base_data["init_admin_user"]["username"]
     password = base_data["init_admin_user"]["password"]
@@ -56,7 +56,7 @@ def login_fixture():
     yield loginInfo.json()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function", autouse=False)
 def insert_delete_user():
     """删除用户前，先在数据库插入一条用户数据"""
     insert_sql = base_data["init_sql"]["insert_delete_user"][0]
@@ -73,7 +73,7 @@ def insert_delete_user():
     logger.info("执行后置SQL：{}".format(del_sql))
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function", autouse=False)
 def delete_register_user():
     """注册用户前，先删除数据，用例执行之后，再次删除以清理数据"""
     del_sql = base_data["init_sql"]["delete_register_user"]
@@ -88,7 +88,7 @@ def delete_register_user():
     logger.info("执行后置SQL：{}".format(del_sql))
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function", autouse=False)
 def update_user_telephone():
     """修改用户前，因为手机号唯一，为了使用例重复执行，每次需要先修改手机号，再执行用例"""
     update_sql = base_data["init_sql"]["update_user_telephone"]

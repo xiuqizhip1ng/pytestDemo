@@ -1,0 +1,3 @@
+url:https://erp-qa.qdjk.xyz/erp-auth/auth/loginpassword
+<class 'dict'>
+{'result': {'code': 200002, 'message': '用户名或密码错误'}, 'data': None, 'page': None}
